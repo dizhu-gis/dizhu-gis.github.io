@@ -8,20 +8,22 @@
 </head>
 <body>
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="main" style="width: 1920px;height:900px;"></div>
+    <div id="main" style="width: 1620px;height:800px;"></div>
+    <p style="text-align:center; font-size:15px" color='grey' > Zhu D, Huang Z, Shi L, et al. Inferring spatial interaction patterns from sequential snapshots of spatial distributions[J]. <br />International Journal of Geographical Information Science, 2018, 32(4): 783-805. <a href="https://doi.org/10.1080/13658816.2017.1413192">https://doi.org/10.1080/13658816.2017.1413192</a></p>
+    <p style="text-align:right; font-size:10px" color='grey' ><a href="http://opendata.pku.edu.cn/dataverse/pkugeosoft?language=en" >Geosoft Lab, Peking University ©️</a></p>
     <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('main'));
         // 指定图表的配置项和数据
         var option = {
-    backgroundColor: '#000000',
+    backgroundColor: '#FFFFFF',
     color: ['gold','aqua','lime'],
     title : {
-        text: 'The Migrant Flow during the 2016\'s Chinese Spring Festival',
-        //subtext:'北京前十',
+        text: 'The Inferred Migrant Flows during the 2016\'s Chinese Spring Festival\n',
         x:'center',
         textStyle : {
-            color: '#fff'
+            color: '#000',
+            fontsize:80
         }
     },
     tooltip : {
@@ -29,7 +31,7 @@
         formatter: '{b}'
     },
     toolbox: {
-        show : false,
+        show : true,
         orient : 'vertical',
         x: 'right',
         y: 'center',
@@ -40,17 +42,17 @@
             saveAsImage : {show: true}
         }
     },
-    /*legend: {
+    legend: {
         orient: 'horizontal',
         x:'left',
-        data:['北京 Top10'],
-        selectedMode: 'single',
+        data:[],
+        selectedMode: 'multiple',
         selected:{
         },
         textStyle : {
             color: '#FF0000'
         }
-    },*/
+    },
     dataRange: {
         min : 1319,
         max : 3000000,
@@ -67,12 +69,12 @@
             name: '全国',
             type: 'map',
             roam: true,
-            hoverable: false,
+            hoverable: true,
             mapType: 'china',
             itemStyle:{
                 normal:{
                     borderColor:'rgba(100,149,237,0.8)',
-                    borderWidth:1,
+                    borderWidth:2,
                     areaStyle:{
                         color: '#000000'
                     }
@@ -445,7 +447,7 @@
             }
         },
         {
-            name: '北京 Top10',
+            name: '',
             type: 'map',
             mapType: 'china',
             data:[],
@@ -470,7 +472,7 @@
                             //width:2
                         },
                         label:{
-                        	show:false,
+                        	show:true,
                         	position:'outer'
                         }
                     }
