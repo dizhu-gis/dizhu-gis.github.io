@@ -1,0 +1,183 @@
+{
+  "site": {
+    "title": "Di Zhu - GIScience | GeoAI | Spatial Thinker",
+    "description": "Assistant Professor of Geographic Information Science at the University of Minnesota, Twin Cities",
+    "author": "Di Zhu",
+    "email": "dizhu@umn.edu",
+    "university": "University of Minnesota, Twin Cities",
+    "department": "Department of Geography, Environment & Society"
+  },
+  "navigation": [
+    {
+      "id": "home",
+      "label": "Home",
+      "url": "#home"
+    },
+    {
+      "id": "about",
+      "label": "About",
+      "url": "#about"
+    },
+    {
+      "id": "research",
+      "label": "Research",
+      "url": "#research"
+    },
+    {
+      "id": "publications",
+      "label": "Publications",
+      "url": "#publications"
+    },
+    {
+      "id": "lab",
+      "label": "GeoDI Lab",
+      "url": "#lab"
+    },
+    {
+      "id": "contact",
+      "label": "Contact",
+      "url": "#contact"
+    }
+  ],
+  "hero": {
+    "title": "Di Zhu",
+    "subtitle": "GIScience | GeoAI | Spatial Thinker",
+    "description": "Assistant Professor of Geographic Information Science\nUniversity of Minnesota, Twin Cities",
+    "buttons": [
+      {
+        "text": "Learn More",
+        "url": "#about",
+        "type": "primary"
+      },
+      {
+        "text": "Get in Touch",
+        "url": "#contact",
+        "type": "secondary"
+      }
+    ]
+  },
+  "about": {
+    "title": "About Me",
+    "content": [
+      "I am an Assistant Professor of Geographic Information Science (GIScience) in the Department of Geography, Environment and Society (GES), University of Minnesota, Twin Cities (UMN), and the director of Geospatial Data Intelligence (GeoDI) Lab.",
+      "My research focuses on GIScience, Geospatial Artificial Intelligence (GeoAI), Spatial Networks, Human-Environment Interactions, and Urban Complexities."
+    ],
+    "education": [
+      {
+        "degree": "PhD in Cartology and GIScience",
+        "institution": "Peking University (PKU)"
+      },
+      {
+        "degree": "B.S. in Geographic Information Systems",
+        "institution": "Peking University (PKU)"
+      },
+      {
+        "degree": "B.Ec. in Economics",
+        "institution": "Peking University (PKU)"
+      }
+    ],
+    "affiliations": [
+      {
+        "title": "Faculty",
+        "organization": "Minnesota Population Center (MPC)"
+      },
+      {
+        "title": "Executive Committee Member",
+        "organization": "Master of GIS program at UMN"
+      },
+      {
+        "title": "Affiliated Professor",
+        "organization": "UMN Data Science Initiatives (DSI)"
+      },
+      {
+        "title": "Board Member",
+        "organization": "International Association of Chinese Professionals in Geographic Information Sciences (CPGIS)"
+      }
+    ]
+  },
+  "research": {
+    "title": "Research Areas",
+    "areas": [
+      {
+        "id": "geospatial-ai",
+        "title": "Geospatial AI",
+        "description": "Exploring intelligent spatial prediction and modeling using deep learning and machine learning approaches.",
+        "icon": "fas fa-brain"
+      },
+      {
+        "id": "spatial-networks",
+        "title": "Spatial Networks",
+        "description": "Analyzing complex spatial interaction patterns and network structures in urban environments.",
+        "icon": "fas fa-network-wired"
+      },
+      {
+        "id": "human-environment",
+        "title": "Human-Environment Interactions",
+        "description": "Understanding the dynamic relationships between human activities and environmental changes.",
+        "icon": "fas fa-users"
+      },
+      {
+        "id": "urban-complexities",
+        "title": "Urban Complexities",
+        "description": "Investigating urban systems through spatial analytics and computational methods.",
+        "icon": "fas fa-city"
+      }
+    ]
+  },
+  "lab": {
+    "title": "Geospatial Data Intelligence (GeoDI) Lab",
+    "description": "Discovering intelligent, innovative, and informative spatio-temporal insights from big geo-data — bridging GIScience, Geospatial AI, and Social Sensing at interdisciplinary frontiers.",
+    "focus_areas": [
+      {
+        "title": "Intelligent Social Sensing",
+        "description": "Understanding human-environment interactions through big geo-data and spatial analytics."
+      },
+      {
+        "title": "Geospatial Intelligence",
+        "description": "Advancing spatial analytics and modeling with machine learning and deep learning principles."
+      }
+    ],
+    "location": "473 Social Sciences Building, 267 19th Ave S, Minneapolis, MN 55455",
+    "email": "dizhu@umn.edu"
+  },
+  "contact": {
+    "title": "Contact & Join Us",
+    "info": {
+      "email": "dizhu@umn.edu",
+      "university": "University of Minnesota, Twin Cities",
+      "department": "Department of Geography, Environment & Society"
+    },
+    "recruitment": {
+      "title": "Join GeoDI Lab",
+      "description": "We are seeking PhD/MA students to join us in the Twin Cities. Please feel free to reach out with your CV, transcript, and one writing sample.",
+      "note": "Inquiries without transcript and writing sample(s) would not be considered."
+    }
+  },
+  "social": {
+    "google_scholar": "https://scholar.google.com/citations?user=example",
+    "linkedin": "https://linkedin.com/in/dizhu",
+    "github": "https://github.com/dizhu",
+    "twitter": "https://twitter.com/dizhu"
+  },
+  "footer": {
+    "copyright": "© 2025 Di Zhu. All rights reserved.",
+    "quick_links": [
+      {
+        "text": "About",
+        "url": "#about"
+      },
+      {
+        "text": "Research",
+        "url": "#research"
+      },
+      {
+        "text": "Publications",
+        "url": "#publications"
+      },
+      {
+        "text": "GeoDI Lab",
+        "url": "#lab"
+      }
+    ]
+  }
+} 

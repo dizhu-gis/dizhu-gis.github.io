@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Di Zhu - Publications - Assistant Professor of Geographic Information Science at the University of Minnesota, Twin Cities">
+    <title>Publications - Di Zhu | GIScience | GeoAI | Spatial Thinker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">Welcome</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#research">Research</a></li>
+                <li><a href="publications.html" class="active">Publications</a></li>
+                <li><a href="index.html#lab">GeoDI Lab</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="lifes.html">Lifes</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Publications Header -->
+    <section class="publications-header">
+        <div class="container">
+            <div class="publications-header-content">
+                <h1>Publications</h1>
+                <p>Complete list of research publications and academic work</p>
+                <a href="index.html" class="back-home-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications Section -->
+    <section class="publications">
+        <div class="container">
+            <div class="publications-content">
+                <div class="publication-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="journals">Journals</button>
+                    <button class="filter-btn" data-filter="conferences">Conferences</button>
+                    <button class="filter-btn" data-filter="books">Books</button>
+                </div>
+                <div class="publications-list">
+                    <!-- Publications will be loaded dynamically from publications.json -->
+                    <div class="loading-publications">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading publications...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Di Zhu</h4>
+                    <p>Assistant Professor of GIScience<br>University of Minnesota, Twin Cities</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="index.html#research">Research</a></li>
+                        <li><a href="index.html#lab">GeoDI Lab</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-google"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Di Zhu. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Modules -->
+    <script src="js/publications-full.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 
