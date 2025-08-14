@@ -61,8 +61,8 @@ class WebsiteApp {
             },
             social: {
                 google_scholar: "https://scholar.google.com/citations?user=example",
-                linkedin: "https://linkedin.com/in/dizhu",
-                github: "https://github.com/dizhu"
+                linkedin: "https://linkedin.com/in/di-zhu-99bb18a1/",
+                github: "https://github.com/GeoDI-Lab"
             }
         };
     }
