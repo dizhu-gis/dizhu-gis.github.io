@@ -150,7 +150,16 @@ body {
     gap: 1rem;
     margin-bottom: 2rem;
     align-items: center;
-    width: 100%;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.icon-buttons-row {
+    display: flex;
+    gap: 10px;
+    width: 200px;
+    justify-content: center;
 }
 
 .social-links-row {
@@ -169,7 +178,7 @@ body {
     background: #000;
     color: #fff;
     text-decoration: none;
-    border-radius: 0;
+    border-radius: 8px;
     transition: all 0.4s ease;
     font-weight: 700;
     font-size: 12px;
@@ -180,8 +189,88 @@ body {
     width: 200px;
 }
 
+.icon-only {
+    width: 60px !important;
+    padding: 8px;
+    gap: 0;
+    height: 40px;
+    line-height: 40px;
+    min-width: 60px;
+    max-width: 60px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    position: relative;
+}
+
+.icon-only:hover::after,
+.icon-only:focus::after {
+    content: attr(title);
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+    font-weight: normal;
+    letter-spacing: normal;
+    text-transform: none;
+}
+
+.icon-only:hover::before,
+.icon-only:focus::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #333;
+    z-index: 1000;
+}
+
+/* Mobile-friendly tooltips */
+@media (max-width: 768px) {
+    .icon-only {
+        cursor: pointer;
+    }
+    
+    .icon-only:active::after {
+        content: attr(title);
+        position: absolute;
+        top: -35px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #333;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        white-space: nowrap;
+        z-index: 1000;
+        font-weight: normal;
+        letter-spacing: normal;
+        text-transform: none;
+    }
+    
+    .icon-only:active::before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 5px solid transparent;
+        border-top-color: #333;
+        z-index: 1000;
+    }
+}
+
 .scholar-link, .linkedin-link {
-    width: 95px;
+    width: 200px;
 }
 
 .linkedin-link {
