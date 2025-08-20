@@ -3,6 +3,9 @@ name: Fetch Latest News from GeoDI RSS
 on:
   workflow_dispatch: # Only manual trigger - no automatic schedule
 
+permissions:
+  contents: write # Allow writing to repository
+
 jobs:
   fetch-news:
     runs-on: ubuntu-latest
@@ -10,6 +13,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
       
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -19,20 +24,35 @@ jobs:
     - name: Fetch RSS and convert to JSON
       run: |
         python -c "
-        import requests
+        import urllib.request
         import json
         import xml.etree.ElementTree as ET
         from datetime import datetime
+        import os
+        
+        # Create data directory if it doesn't exist
+        os.makedirs('data', exist_ok=True)
         
         # Fetch RSS feed
         rss_url = 'https://geodi.umn.edu/rss.xml'
         print(f'Fetching RSS from: {rss_url}')
         
-        response = requests.get(rss_url)
-        response.raise_for_status()
+        try:
+            # Use urllib instead of requests (built-in)
+            with urllib.request.urlopen(rss_url, timeout=30) as response:
+                rss_content = response.read()
+            print(f'RSS fetch successful, status: {response.status}')
+        except Exception as e:
+            print(f'Error fetching RSS: {e}')
+            raise
         
         # Parse XML
-        root = ET.fromstring(response.content)
+        try:
+            root = ET.fromstring(rss_content)
+            print('XML parsing successful')
+        except Exception as e:
+            print(f'Error parsing XML: {e}')
+            raise
         
         # Extract items (RSS format)
         items = []
@@ -64,6 +84,8 @@ jobs:
                     'date': pubDate
                 })
         
+        print(f'Found {len(items)} total items in RSS feed')
+        
         # Get top 3 items
         top_items = items[:3]
         
@@ -75,10 +97,14 @@ jobs:
         }
         
         # Save to JSON file
-        with open('data/latest-news.json', 'w', encoding='utf-8') as f:
-            json.dump(output_data, f, indent=2, ensure_ascii=False)
+        try:
+            with open('data/latest-news.json', 'w', encoding='utf-8') as f:
+                json.dump(output_data, f, indent=2, ensure_ascii=False)
+            print(f'Successfully saved {len(top_items)} news items to data/latest-news.json')
+        except Exception as e:
+            print(f'Error saving JSON file: {e}')
+            raise
         
-        print(f'Successfully fetched {len(top_items)} news items')
         for i, item in enumerate(top_items, 1):
             print(f'{i}. {item[\"title\"]}')
         "
