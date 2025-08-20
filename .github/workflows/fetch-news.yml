@@ -1,0 +1,92 @@
+name: Fetch Latest News from GeoDI RSS
+
+on:
+  workflow_dispatch: # Only manual trigger - no automatic schedule
+
+jobs:
+  fetch-news:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Fetch RSS and convert to JSON
+      run: |
+        python -c "
+        import requests
+        import json
+        import xml.etree.ElementTree as ET
+        from datetime import datetime
+        
+        # Fetch RSS feed
+        rss_url = 'https://geodi.umn.edu/rss.xml'
+        print(f'Fetching RSS from: {rss_url}')
+        
+        response = requests.get(rss_url)
+        response.raise_for_status()
+        
+        # Parse XML
+        root = ET.fromstring(response.content)
+        
+        # Extract items (RSS format)
+        items = []
+        for item in root.findall('.//item'):
+            title_elem = item.find('title')
+            link_elem = item.find('link')
+            description_elem = item.find('description')
+            pubDate_elem = item.find('pubDate')
+            
+            if title_elem is not None and link_elem is not None:
+                title = title_elem.text.strip() if title_elem.text else ''
+                link = link_elem.text.strip() if link_elem.text else ''
+                description = description_elem.text.strip() if description_elem is not None and description_elem.text else ''
+                pubDate = pubDate_elem.text.strip() if pubDate_elem is not None and pubDate_elem.text else ''
+                
+                # Clean description (remove HTML tags)
+                import re
+                description = re.sub(r'<[^>]+>', '', description)
+                description = description.replace('&nbsp;', ' ').strip()
+                
+                # Limit description length
+                if len(description) > 200:
+                    description = description[:200] + '...'
+                
+                items.append({
+                    'title': title,
+                    'description': description,
+                    'url': link,
+                    'date': pubDate
+                })
+        
+        # Get top 3 items
+        top_items = items[:3]
+        
+        # Create output data
+        output_data = {
+            'last_updated': datetime.now().isoformat(),
+            'source': rss_url,
+            'items': top_items
+        }
+        
+        # Save to JSON file
+        with open('data/latest-news.json', 'w', encoding='utf-8') as f:
+            json.dump(output_data, f, indent=2, ensure_ascii=False)
+        
+        print(f'Successfully fetched {len(top_items)} news items')
+        for i, item in enumerate(top_items, 1):
+            print(f'{i}. {item[\"title\"]}')
+        "
+        
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add data/latest-news.json
+        git diff --quiet && git diff --staged --quiet || git commit -m "Update latest news from GeoDI RSS feed"
+        git push 
