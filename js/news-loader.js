@@ -133,15 +133,11 @@ class NewsLoader {
                 console.log(`Raw item title: "${item.title}"`);
                 
                 const title = item.title || '';
-                const rawDescription = item.description || '';
+                const description = item.description || ''; // Use description directly from JSON
                 const url = item.url || '';
                 const pubDate = item.date || '';
                 
-                // Extract only the first paragraph
-                const description = this.extractFirstParagraph(rawDescription);
-                
-                console.log(`Extracted title: "${title}"`);
-                console.log(`Extracted description: "${description}"`);
+                console.log(`Using description directly from JSON: "${description}"`);
                 
                 // Format the date
                 const formattedDate = this.formatDate(pubDate);
