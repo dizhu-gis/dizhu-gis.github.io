@@ -177,14 +177,24 @@ jobs:
         top_items = items[:3]
         
         # Create output data
+        import random
+        import time
+        
+        # Add a small delay and random component to ensure unique timestamp
+        time.sleep(0.1)
+        random_suffix = random.randint(1000, 9999)
+        current_time = datetime.now().isoformat()
+        
         output_data = {
-            'last_updated': datetime.now().isoformat(),
+            'last_updated': current_time,
             'source': rss_url,
-            'items': top_items
+            'items': top_items,
+            'action_run_id': f'run_{int(time.time())}_{random_suffix}'
         }
         
         # Add a small comment to ensure the file is always different
         print(f'Generated JSON with timestamp: {output_data["last_updated"]}')
+        print(f'Action run ID: {output_data["action_run_id"]}')
         print(f'Total items processed: {len(items)}')
         print(f'Top items selected: {len(top_items)}')
         
@@ -215,7 +225,7 @@ jobs:
             # Always commit and push, even if content appears the same
             # This ensures fresh data is always fetched and timestamp is updated
             echo "🔄 Force updating JSON file with fresh data..."
-            git commit -m "Update latest news from GeoDI RSS feed - $(date) - Force refresh"
+            git commit --allow-empty -m "Update latest news from GeoDI RSS feed - $(date) - Force refresh"
             git push
             echo "✅ Successfully pushed fresh news data"
         else
