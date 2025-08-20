@@ -112,13 +112,55 @@ jobs:
                 description = re.sub(r'<[^>]+>', '', description)
                 description = description.replace('&nbsp;', ' ').strip()
                 
+                # Extract the first paragraph of actual content
+                # The RSS description contains: "Title\nauthor\ndate\n\n\n\n\n\n  \n    \n      \n        \n          \n\n\n  \n    \n      \n            Actual content..."
+                # We need to find the actual content that starts after the metadata
+                
+                # Look for the pattern that indicates the start of actual content
+                # The actual content usually starts with lots of spaces followed by text
+                content_match = re.search(r'\s{12,}([^.!?]+[.!?])', description)
+                
+                if content_match:
+                    # Found content with the spaces pattern
+                    extracted_content = content_match.group(1).strip()
+                    print(f'Extracted content for "{title}": {extracted_content[:100]}...')
+                else:
+                    # Fallback: try to find content after metadata patterns
+                    # Split by lines and look for substantial content
+                    lines = description.split('\n')
+                    start_index = 0
+                    
+                    for i, line in enumerate(lines):
+                        line = line.strip()
+                        # Look for lines that contain actual content (not metadata)
+                        if (len(line) > 20 and 
+                            ('research' in line.lower() or 
+                             'article' in line.lower() or 
+                             'paper' in line.lower() or
+                             'study' in line.lower() or
+                             'published' in line.lower())):
+                            start_index = i
+                            break
+                    
+                    # Get content from the found line onwards
+                    content_lines = lines[start_index:]
+                    extracted_content = ' '.join(content_lines).strip()
+                    
+                    # Find the first sentence
+                    sentence_match = re.search(r'^([^.!?]+[.!?])', extracted_content)
+                    if sentence_match:
+                        extracted_content = sentence_match.group(1).strip()
+                    else:
+                        # If no sentence ending, take first 200 chars
+                        extracted_content = extracted_content[:200].strip()
+                
                 # Limit description length
-                if len(description) > 200:
-                    description = description[:200] + '...'
+                if len(extracted_content) > 200:
+                    extracted_content = extracted_content[:200] + '...'
                 
                 items.append({
                     'title': title,
-                    'description': description,
+                    'description': extracted_content,
                     'url': link,
                     'date': pubDate
                 })

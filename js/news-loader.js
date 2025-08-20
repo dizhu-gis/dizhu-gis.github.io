@@ -27,18 +27,86 @@ class NewsLoader {
         }
     }
 
+    extractFirstParagraph(text) {
+        if (!text) return '';
+        
+        console.log('=== EXTRACTING FIRST PARAGRAPH ===');
+        console.log('Original text:', text);
+        
+        // Remove extra whitespace and newlines
+        let cleanText = text.replace(/\s+/g, ' ').trim();
+        console.log('After whitespace cleanup:', cleanText);
+        
+        // The content structure is: "Title\nauthor\ndate\n\n\n\n\n\n  \n    \n      \n        \n          \n\n\n  \n    \n      \n            Actual content..."
+        // We need to find the actual content that starts after all the metadata and formatting
+        
+        // Look for the pattern that indicates the start of actual content
+        // The actual content usually starts with "            " (lots of spaces) followed by text
+        const contentMatch = cleanText.match(/\s{12,}([^.!?]+[.!?])/);
+        
+        if (contentMatch) {
+            let content = contentMatch[1].trim();
+            console.log('Found content with spaces pattern:', content);
+            
+            // Limit length
+            if (content.length > 200) {
+                content = content.substring(0, 200) + '...';
+            }
+            
+            console.log('Final extracted paragraph:', content);
+            console.log('=== END EXTRACTION ===');
+            return content;
+        }
+        
+        // Fallback: try to find any substantial content after metadata
+        const lines = cleanText.split(' ');
+        let startIndex = 0;
+        
+        // Skip the first few words (title, author, date)
+        for (let i = 0; i < lines.length; i++) {
+            const word = lines[i];
+            // Look for the start of actual content (usually after lots of whitespace/formatting)
+            if (word.length > 20 && word.includes('research') || word.includes('article') || word.includes('paper')) {
+                startIndex = i;
+                break;
+            }
+        }
+        
+        let content = lines.slice(startIndex).join(' ').trim();
+        
+        // Find the first sentence
+        const firstSentenceMatch = content.match(/^([^.!?]+[.!?])/);
+        if (firstSentenceMatch) {
+            content = firstSentenceMatch[1].trim();
+        } else {
+            content = content.substring(0, 200).trim();
+        }
+        
+        // Limit length
+        if (content.length > 200) {
+            content = content.substring(0, 200) + '...';
+        }
+        
+        console.log('Final extracted paragraph (fallback):', content);
+        console.log('=== END EXTRACTION ===');
+        
+        return content;
+    }
+
     async fetchNewsFromJSON() {
         try {
-            // Add cache-busting parameter to ensure fresh data
+            // Add more aggressive cache-busting parameters
             const timestamp = Date.now();
-            const urlWithCacheBust = `${this.newsDataUrl}?_t=${timestamp}`;
+            const random = Math.random();
+            const urlWithCacheBust = `${this.newsDataUrl}?_t=${timestamp}&_r=${random}`;
             console.log('Fetching news from JSON file:', urlWithCacheBust);
             
             const response = await fetch(urlWithCacheBust, {
                 method: 'GET',
                 headers: {
-                    'Cache-Control': 'no-cache',
-                    'Pragma': 'no-cache'
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
                 }
             });
             
@@ -48,11 +116,12 @@ class NewsLoader {
             
             const data = await response.json();
             console.log('JSON data received:', data);
+            console.log('Raw JSON content:', JSON.stringify(data, null, 2));
             
             if (!data.items || data.items.length === 0) {
                 throw new Error('No items found in JSON data');
-            }
-            
+    }
+
             console.log('=== JSON FETCH SUCCESSFUL ===');
             console.log('Total items from JSON:', data.items.length);
             console.log('Last updated:', data.last_updated);
@@ -61,11 +130,18 @@ class NewsLoader {
             // Convert JSON format to our format
             const newsItems = data.items.map((item, index) => {
                 console.log(`Processing JSON item ${index + 1}:`, item);
+                console.log(`Raw item title: "${item.title}"`);
                 
                 const title = item.title || '';
-                const description = item.description || '';
+                const rawDescription = item.description || '';
                 const url = item.url || '';
                 const pubDate = item.date || '';
+                
+                // Extract only the first paragraph
+                const description = this.extractFirstParagraph(rawDescription);
+                
+                console.log(`Extracted title: "${title}"`);
+                console.log(`Extracted description: "${description}"`);
                 
                 // Format the date
                 const formattedDate = this.formatDate(pubDate);
@@ -157,6 +233,8 @@ class NewsLoader {
 
         console.log(`=== DISPLAYING NEWS ===`);
         console.log(`Displaying ${newsItems.length} news items`);
+        console.log('News items to display:', newsItems);
+        console.log('Titles to display:', newsItems.map(item => item.title));
 
         // Clear existing content
         this.newsContainer.innerHTML = '';
@@ -182,8 +260,8 @@ class NewsLoader {
         // Clean and truncate the description for display
         const cleanDescription = this.cleanHtmlTags(news.description);
         
-        // Add indicator for data source
-        const dataIndicator = '<small style="color: #28a745; font-style: italic;">(Auto-updated from GeoDI RSS)</small>';
+        // Remove the indicator text - no longer showing the green text
+        const dataIndicator = '';
         
         newsItem.innerHTML = `
             <div class="news-date">${news.date}</div>
@@ -261,4 +339,4 @@ class NewsLoader {
 document.addEventListener('DOMContentLoaded', () => {
     const newsLoader = new NewsLoader();
     newsLoader.loadNews();
-}); 
+});
