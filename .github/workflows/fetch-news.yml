@@ -50,16 +50,38 @@ jobs:
             with urllib.request.urlopen(req, timeout=30) as response:
                 rss_content = response.read()
             print(f'RSS fetch successful, status: {response.status}')
+            print(f'Content length: {len(rss_content)} bytes')
+            print(f'Content type: {response.headers.get(\"Content-Type\", \"unknown\")}')
+            
+            # Debug: show first 500 characters
+            content_preview = rss_content.decode('utf-8', errors='ignore')[:500]
+            print(f'Content preview: {content_preview}')
+            
         except Exception as e:
             print(f'Error fetching RSS: {e}')
             raise
         
         # Parse XML
         try:
-            root = ET.fromstring(rss_content)
+            # Try to decode content properly
+            if isinstance(rss_content, bytes):
+                rss_text = rss_content.decode('utf-8', errors='ignore')
+            else:
+                rss_text = str(rss_content)
+            
+            # Remove any BOM or leading whitespace
+            rss_text = rss_text.strip()
+            
+            # Check if it looks like XML
+            if not rss_text.startswith('<?xml') and not rss_text.startswith('<rss'):
+                print('Warning: Content does not appear to be XML')
+                print(f'First 100 chars: {rss_text[:100]}')
+            
+            root = ET.fromstring(rss_text)
             print('XML parsing successful')
         except Exception as e:
             print(f'Error parsing XML: {e}')
+            print(f'First 200 chars of content: {rss_text[:200] if 'rss_text' in locals() else 'N/A'}')
             raise
         
         # Extract items (RSS format)
