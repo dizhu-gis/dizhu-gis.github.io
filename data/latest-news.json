@@ -1,0 +1,24 @@
+{
+  "last_updated": "2025-08-20T17:32:30.379347",
+  "source": "https://geodi.umn.edu/rss.xml",
+  "items": [
+    {
+      "title": "Deep panel flow inference paper published on IJGIS",
+      "description": "GeoDI lab's recent research article, introducing a gravity-informed Deep Spatial Evolution Network (DSEN) to infer panel spatial flows, has now been published in the International Journal of Geographi...",
+      "url": "https://geodi.umn.edu/deep-panel-flow-inference-paper-published-ijgis",
+      "date": "Tue, 12 Aug 2025 16:10:34 +0000"
+    },
+    {
+      "title": "The Weather-Informed Mobility Network (WIMN) paper is published on IJGIS",
+      "description": "Our recent research article regarding the Weather-Informed Mobility Network (WIMN), a graph deep learning framework for modeling post-snowfall human mobility networks, has now been published on the In...",
+      "url": "https://geodi.umn.edu/weather-informed-mobility-network-wimn-paper-published-ijgis",
+      "date": "Fri, 04 Jul 2025 23:32:23 +0000"
+    },
+    {
+      "title": "The new \"visitor-census\" article is published on Scientific Data",
+      "description": "A recent research article introducing a visitor-enriched census that incorporates human visitations extracted from large-scale mobile positioning data has now been published on Scientific Data.",
+      "url": "https://geodi.umn.edu/new-visitor-census-article-published-scientific-data",
+      "date": "Fri, 04 Jul 2025 23:25:56 +0000"
+    }
+  ]
+}
