@@ -29,9 +29,18 @@ class NewsLoader {
 
     async fetchNewsFromJSON() {
         try {
-            console.log('Fetching news from JSON file:', this.newsDataUrl);
+            // Add cache-busting parameter to ensure fresh data
+            const timestamp = Date.now();
+            const urlWithCacheBust = `${this.newsDataUrl}?_t=${timestamp}`;
+            console.log('Fetching news from JSON file:', urlWithCacheBust);
             
-            const response = await fetch(this.newsDataUrl);
+            const response = await fetch(urlWithCacheBust, {
+                method: 'GET',
+                headers: {
+                    'Cache-Control': 'no-cache',
+                    'Pragma': 'no-cache'
+                }
+            });
             
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
