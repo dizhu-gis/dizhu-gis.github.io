@@ -95,11 +95,17 @@ jobs:
         
         # Extract items (RSS format)
         items = []
+        print(f'Starting to extract items from RSS feed...')
+        print(f'Looking for items with: {root.findall(".//item")}')
+        
         for item in root.findall('.//item'):
+            print(f'Processing RSS item...')
             title_elem = item.find('title')
             link_elem = item.find('link')
             description_elem = item.find('description')
             pubDate_elem = item.find('pubDate')
+            
+            print(f'Found elements - title: {title_elem is not None}, link: {link_elem is not None}, description: {description_elem is not None}')
             
             if title_elem is not None and link_elem is not None:
                 title = title_elem.text.strip() if title_elem.text else ''
@@ -202,7 +208,23 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add data/latest-news.json
-        git status
-        git commit -m "Update latest news from GeoDI RSS feed - $(date)"
-        git push 
+        
+        # Check if the JSON file exists
+        if [ -f "data/latest-news.json" ]; then
+            echo "✅ JSON file exists, adding to git..."
+            git add data/latest-news.json
+            git status
+            
+            # Check if there are changes to commit
+            if git diff --staged --quiet; then
+                echo "⚠️  No changes to commit - JSON file unchanged"
+            else
+                echo "✅ Changes detected, committing..."
+                git commit -m "Update latest news from GeoDI RSS feed - $(date)"
+                git push
+                echo "✅ Successfully pushed changes"
+            fi
+        else
+            echo "❌ JSON file not found - Python script may have failed"
+            exit 1
+        fi 
