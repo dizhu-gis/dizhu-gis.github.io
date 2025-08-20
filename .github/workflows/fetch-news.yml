@@ -200,9 +200,18 @@ jobs:
         
         # Save to JSON file
         try:
+            # Ensure the file is always different by adding unique identifiers
+            print(f'Writing JSON file with unique timestamp and run ID...')
             with open('data/latest-news.json', 'w', encoding='utf-8') as f:
                 json.dump(output_data, f, indent=2, ensure_ascii=False)
             print(f'Successfully saved {len(top_items)} news items to data/latest-news.json')
+            
+            # Verify the file was written correctly
+            with open('data/latest-news.json', 'r', encoding='utf-8') as f:
+                written_data = json.load(f)
+            print(f'Verification - File last_updated: {written_data.get("last_updated", "NOT FOUND")}')
+            print(f'Verification - File action_run_id: {written_data.get("action_run_id", "NOT FOUND")}')
+            
         except Exception as e:
             print(f'Error saving JSON file: {e}')
             raise
@@ -219,8 +228,17 @@ jobs:
         # Check if the JSON file exists
         if [ -f "data/latest-news.json" ]; then
             echo "✅ JSON file exists, adding to git..."
+            
+            # Show file content and git diff for debugging
+            echo "📋 Current JSON file content:"
+            head -n 10 data/latest-news.json
+            echo "..."
+            
             git add data/latest-news.json
             git status
+            
+            echo "🔍 Git diff of changes:"
+            git diff --cached data/latest-news.json || echo "No diff output"
             
             # Always commit and push, even if content appears the same
             # This ensures fresh data is always fetched and timestamp is updated
