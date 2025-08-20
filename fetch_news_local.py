@@ -1,0 +1,201 @@
+#!/usr/bin/env python3
+"""
+Local RSS Fetcher for GeoDI News
+This script fetches the latest news from GeoDI RSS and updates the local JSON file.
+"""
+
+import urllib.request
+import json
+import xml.etree.ElementTree as ET
+from datetime import datetime
+import os
+import gzip
+import re
+
+def fetch_geodi_news():
+    # Create data directory if it doesn't exist
+    os.makedirs('data', exist_ok=True)
+    
+    # Fetch RSS feed
+    rss_url = 'https://geodi.umn.edu/rss.xml'
+    print(f'Fetching RSS from: {rss_url}')
+    
+    try:
+        # Create request with proper headers to avoid 403 error
+        req = urllib.request.Request(rss_url)
+        req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36')
+        req.add_header('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8')
+        req.add_header('Accept-Language', 'en-US,en;q=0.5')
+        req.add_header('Connection', 'keep-alive')
+        
+        # Use urllib with headers
+        with urllib.request.urlopen(req, timeout=30) as response:
+            rss_content = response.read()
+        print(f'RSS fetch successful, status: {response.status}')
+        print(f'Content length: {len(rss_content)} bytes')
+        print(f'Content type: {response.headers.get("Content-Type", "unknown")}')
+        print(f'Content encoding: {response.headers.get("Content-Encoding", "none")}')
+        
+        # Handle gzip compression if present
+        if response.headers.get('Content-Encoding') == 'gzip':
+            print('Decompressing gzipped content...')
+            rss_content = gzip.decompress(rss_content)
+            print(f'Decompressed content length: {len(rss_content)} bytes')
+        
+        # Debug: show first 500 characters
+        content_preview = rss_content.decode('utf-8', errors='ignore')[:500]
+        print(f'Content preview: {content_preview}')
+        
+    except Exception as e:
+        print(f'Error fetching RSS: {e}')
+        raise
+    
+    # Parse XML
+    try:
+        # Try to decode content properly
+        if isinstance(rss_content, bytes):
+            rss_text = rss_content.decode('utf-8', errors='ignore')
+        else:
+            rss_text = str(rss_content)
+        
+        # Remove any BOM or leading whitespace
+        rss_text = rss_text.strip()
+        
+        # Check if it looks like XML
+        if not rss_text.startswith('<?xml') and not rss_text.startswith('<rss'):
+            print('Warning: Content does not appear to be XML')
+            print(f'First 100 chars: {rss_text[:100]}')
+        
+        root = ET.fromstring(rss_text)
+        print('XML parsing successful')
+    except Exception as e:
+        print(f'Error parsing XML: {e}')
+        print(f'First 200 chars of content: {rss_text[:200] if "rss_text" in locals() else "N/A"}')
+        raise
+    
+    # Extract items (RSS format)
+    items = []
+    for item in root.findall('.//item'):
+        title_elem = item.find('title')
+        link_elem = item.find('link')
+        description_elem = item.find('description')
+        pubDate_elem = item.find('pubDate')
+        
+        if title_elem is not None and link_elem is not None:
+            title = title_elem.text.strip() if title_elem.text else ''
+            link = link_elem.text.strip() if link_elem.text else ''
+            description = description_elem.text.strip() if description_elem is not None and description_elem.text else ''
+            pubDate = pubDate_elem.text.strip() if pubDate_elem is not None and pubDate_elem.text else ''
+            
+            print(f'\n--- Processing: {title} ---')
+            print(f'Raw description: {description[:200]}...')
+            
+            # Clean description (remove HTML tags)
+            description = re.sub(r'<[^>]+>', '', description)
+            description = description.replace('&nbsp;', ' ').strip()
+            
+            # Extract the first paragraph of actual content
+            # The RSS description contains: "Title\nauthor\ndate\n\n\n\n\n\n  \n    \n      \n        \n          \n\n\n  \n    \n      \n            Actual content..."
+            # We need to find the actual content that starts after the metadata
+            
+            # Look for the pattern that indicates the start of actual content
+            # The actual content usually starts with lots of spaces followed by text
+            content_match = re.search(r'\s{12,}([^.!?]+[.!?])', description)
+            
+            if content_match:
+                # Found content with the spaces pattern
+                extracted_content = content_match.group(1).strip()
+                print(f'✅ Extracted content (pattern match): {extracted_content[:100]}...')
+            else:
+                # Fallback: try to find content after metadata patterns
+                # Split by lines and look for substantial content
+                lines = description.split('\n')
+                start_index = 0
+                
+                for i, line in enumerate(lines):
+                    line = line.strip()
+                    # Look for lines that contain actual content (not metadata)
+                    if (len(line) > 20 and 
+                        ('research' in line.lower() or 
+                         'article' in line.lower() or 
+                         'paper' in line.lower() or
+                         'study' in line.lower() or
+                         'published' in line.lower())):
+                        start_index = i
+                        break
+                
+                # Get content from the found line onwards
+                content_lines = lines[start_index:]
+                extracted_content = ' '.join(content_lines).strip()
+                
+                # Find the first sentence
+                sentence_match = re.search(r'^([^.!?]+[.!?])', extracted_content)
+                if sentence_match:
+                    extracted_content = sentence_match.group(1).strip()
+                else:
+                    # If no sentence ending, take first 200 chars
+                    extracted_content = extracted_content[:200].strip()
+                
+                print(f'✅ Extracted content (fallback): {extracted_content[:100]}...')
+            
+            # Fix: If content starts with "article," or similar fragments, find the complete sentence
+            if extracted_content.startswith('article,') or extracted_content.startswith('paper,') or extracted_content.startswith('research,'):
+                # Look for the complete sentence that contains this fragment
+                # Find where the actual content starts (after the spaces pattern)
+                full_content_match = re.search(r'\s{12,}([^.!?]+[.!?])', description)
+                if full_content_match:
+                    # Get the full content after spaces
+                    full_content = full_content_match.group(0).strip()
+                    # Find the first complete sentence in this content
+                    sentence_match = re.search(r'([^.!?]+[.!?])', full_content)
+                    if sentence_match:
+                        extracted_content = sentence_match.group(1).strip()
+                        print(f'✅ Fixed content (complete sentence): {extracted_content[:100]}...')
+            
+            # Limit description length
+            if len(extracted_content) > 200:
+                extracted_content = extracted_content[:200] + '...'
+            
+            items.append({
+                'title': title,
+                'description': extracted_content,
+                'url': link,
+                'date': pubDate
+            })
+    
+    print(f'\nFound {len(items)} total items in RSS feed')
+    
+    # Get top 3 items
+    top_items = items[:3]
+    
+    # Create output data
+    output_data = {
+        'last_updated': datetime.now().isoformat(),
+        'source': rss_url,
+        'items': top_items
+    }
+    
+    # Save to JSON file
+    try:
+        with open('data/latest-news.json', 'w', encoding='utf-8') as f:
+            json.dump(output_data, f, indent=2, ensure_ascii=False)
+        print(f'✅ Successfully saved {len(top_items)} news items to data/latest-news.json')
+    except Exception as e:
+        print(f'❌ Error saving JSON file: {e}')
+        raise
+    
+    print('\n📰 Latest News Items:')
+    for i, item in enumerate(top_items, 1):
+        print(f'{i}. {item["title"]}')
+        print(f'   Description: {item["description"][:100]}...')
+        print()
+    
+    return output_data
+
+if __name__ == "__main__":
+    try:
+        fetch_geodi_news()
+        print("\n🎉 News fetch completed successfully!")
+    except Exception as e:
+        print(f"\n❌ Error: {e}")
+        exit(1) 
