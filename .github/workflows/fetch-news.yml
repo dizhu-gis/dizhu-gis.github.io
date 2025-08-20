@@ -162,8 +162,8 @@ jobs:
             'action_run_id': f'run_{int(time.time())}_{random_suffix}'
         }
         
-        print(f'Generated JSON with timestamp: {output_data["last_updated"]}')
-        print(f'Action run ID: {output_data["action_run_id"]}')
+        print(f'Generated JSON with timestamp: {output_data[\"last_updated\"]}')
+        print(f'Action run ID: {output_data[\"action_run_id\"]}')
         print(f'Total items processed: {len(items)}')
         print(f'Top items selected: {len(top_items)}')
         
