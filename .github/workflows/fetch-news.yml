@@ -95,17 +95,13 @@ jobs:
         
         # Extract items (RSS format)
         items = []
-        print(f'Starting to extract items from RSS feed...')
-        print(f'Looking for items with: {root.findall(".//item")}')
+        print('Starting to extract items from RSS feed...')
         
         for item in root.findall('.//item'):
-            print(f'Processing RSS item...')
             title_elem = item.find('title')
             link_elem = item.find('link')
             description_elem = item.find('description')
             pubDate_elem = item.find('pubDate')
-            
-            print(f'Found elements - title: {title_elem is not None}, link: {link_elem is not None}, description: {description_elem is not None}')
             
             if title_elem is not None and link_elem is not None:
                 title = title_elem.text.strip() if title_elem.text else ''
@@ -113,13 +109,12 @@ jobs:
                 description = description_elem.text.strip() if description_elem is not None and description_elem.text else ''
                 pubDate = pubDate_elem.text.strip() if pubDate_elem is not None and pubDate_elem.text else ''
                 
+                print(f'Processing item: {title}')
+                
                 # Clean description (remove HTML tags)
                 import re
                 description = re.sub(r'<[^>]+>', '', description)
                 description = description.replace('&nbsp;', ' ').strip()
-                
-                print(f'Processing item: {title}')
-                print(f'Raw description length: {len(description)}')
                 
                 # Extract the first paragraph of actual content
                 # The RSS description contains: "Title\nauthor\ndate\n\n\n\n\n\n  \n    \n      \n        \n          \n\n\n  \n    \n      \n            Actual content..."
@@ -132,9 +127,8 @@ jobs:
                 if content_match:
                     # Found content with the spaces pattern
                     extracted_content = content_match.group(1).strip()
-                    print(f'✅ Extracted content (pattern match): {extracted_content[:100]}...')
+                    print(f'Extracted content: {extracted_content[:100]}...')
                 else:
-                    print(f'⚠️  Pattern match failed, trying fallback...')
                     # Fallback: try to find content after metadata patterns
                     # Split by lines and look for substantial content
                     lines = description.split('\n')
@@ -164,13 +158,11 @@ jobs:
                         # If no sentence ending, take first 200 chars
                         extracted_content = extracted_content[:200].strip()
                     
-                    print(f'✅ Extracted content (fallback): {extracted_content[:100]}...')
+                    print(f'Extracted content (fallback): {extracted_content[:100]}...')
                 
                 # Limit description length
                 if len(extracted_content) > 200:
                     extracted_content = extracted_content[:200] + '...'
-                
-                print(f'Final extracted content: {extracted_content[:100]}...')
                 
                 items.append({
                     'title': title,
