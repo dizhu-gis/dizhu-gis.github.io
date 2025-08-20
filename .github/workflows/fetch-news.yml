@@ -30,7 +30,9 @@ jobs:
         from datetime import datetime
         import os
         import gzip
-        import io
+        import re
+        import time
+        import random
         
         # Create data directory if it doesn't exist
         os.makedirs('data', exist_ok=True)
@@ -45,7 +47,6 @@ jobs:
             req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36')
             req.add_header('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8')
             req.add_header('Accept-Language', 'en-US,en;q=0.5')
-            # Remove Accept-Encoding to avoid gzip compression
             req.add_header('Connection', 'keep-alive')
             
             # Use urllib with headers
@@ -53,8 +54,6 @@ jobs:
                 rss_content = response.read()
             print(f'RSS fetch successful, status: {response.status}')
             print(f'Content length: {len(rss_content)} bytes')
-            print(f'Content type: {response.headers.get(\"Content-Type\", \"unknown\")}')
-            print(f'Content encoding: {response.headers.get(\"Content-Encoding\", \"none\")}')
             
             # Handle gzip compression if present
             if response.headers.get('Content-Encoding') == 'gzip':
@@ -62,35 +61,22 @@ jobs:
                 rss_content = gzip.decompress(rss_content)
                 print(f'Decompressed content length: {len(rss_content)} bytes')
             
-            # Debug: show first 500 characters
-            content_preview = rss_content.decode('utf-8', errors='ignore')[:500]
-            print(f'Content preview: {content_preview}')
-            
         except Exception as e:
             print(f'Error fetching RSS: {e}')
             raise
         
         # Parse XML
         try:
-            # Try to decode content properly
             if isinstance(rss_content, bytes):
                 rss_text = rss_content.decode('utf-8', errors='ignore')
             else:
                 rss_text = str(rss_content)
             
-            # Remove any BOM or leading whitespace
             rss_text = rss_text.strip()
-            
-            # Check if it looks like XML
-            if not rss_text.startswith('<?xml') and not rss_text.startswith('<rss'):
-                print('Warning: Content does not appear to be XML')
-                print(f'First 100 chars: {rss_text[:100]}')
-            
             root = ET.fromstring(rss_text)
             print('XML parsing successful')
         except Exception as e:
             print(f'Error parsing XML: {e}')
-            print(f'First 200 chars of content: {rss_text[:200] if \"rss_text\" in locals() else \"N/A\"}')
             raise
         
         # Extract items (RSS format)
@@ -112,31 +98,22 @@ jobs:
                 print(f'Processing item: {title}')
                 
                 # Clean description (remove HTML tags)
-                import re
                 description = re.sub(r'<[^>]+>', '', description)
                 description = description.replace('&nbsp;', ' ').strip()
                 
                 # Extract the first paragraph of actual content
-                # The RSS description contains: "Title\nauthor\ndate\n\n\n\n\n\n  \n    \n      \n        \n          \n\n\n  \n    \n      \n            Actual content..."
-                # We need to find the actual content that starts after the metadata
-                
-                # Look for the pattern that indicates the start of actual content
-                # The actual content usually starts with lots of spaces followed by text
                 content_match = re.search(r'\s{12,}([^.!?]+[.!?])', description)
                 
                 if content_match:
-                    # Found content with the spaces pattern
                     extracted_content = content_match.group(1).strip()
                     print(f'Extracted content: {extracted_content[:100]}...')
                 else:
                     # Fallback: try to find content after metadata patterns
-                    # Split by lines and look for substantial content
                     lines = description.split('\n')
                     start_index = 0
                     
                     for i, line in enumerate(lines):
                         line = line.strip()
-                        # Look for lines that contain actual content (not metadata)
                         if (len(line) > 20 and 
                             ('research' in line.lower() or 
                              'article' in line.lower() or 
@@ -146,16 +123,13 @@ jobs:
                             start_index = i
                             break
                     
-                    # Get content from the found line onwards
                     content_lines = lines[start_index:]
                     extracted_content = ' '.join(content_lines).strip()
                     
-                    # Find the first sentence
                     sentence_match = re.search(r'^([^.!?]+[.!?])', extracted_content)
                     if sentence_match:
                         extracted_content = sentence_match.group(1).strip()
                     else:
-                        # If no sentence ending, take first 200 chars
                         extracted_content = extracted_content[:200].strip()
                     
                     print(f'Extracted content (fallback): {extracted_content[:100]}...')
@@ -176,11 +150,7 @@ jobs:
         # Get top 3 items
         top_items = items[:3]
         
-        # Create output data
-        import random
-        import time
-        
-        # Add a small delay and random component to ensure unique timestamp
+        # Create output data with unique identifiers
         time.sleep(0.1)
         random_suffix = random.randint(1000, 9999)
         current_time = datetime.now().isoformat()
@@ -192,7 +162,6 @@ jobs:
             'action_run_id': f'run_{int(time.time())}_{random_suffix}'
         }
         
-        # Add a small comment to ensure the file is always different
         print(f'Generated JSON with timestamp: {output_data["last_updated"]}')
         print(f'Action run ID: {output_data["action_run_id"]}')
         print(f'Total items processed: {len(items)}')
@@ -200,24 +169,15 @@ jobs:
         
         # Save to JSON file
         try:
-            # Ensure the file is always different by adding unique identifiers
-            print(f'Writing JSON file with unique timestamp and run ID...')
             with open('data/latest-news.json', 'w', encoding='utf-8') as f:
                 json.dump(output_data, f, indent=2, ensure_ascii=False)
             print(f'Successfully saved {len(top_items)} news items to data/latest-news.json')
-            
-            # Verify the file was written correctly
-            with open('data/latest-news.json', 'r', encoding='utf-8') as f:
-                written_data = json.load(f)
-            print(f'Verification - File last_updated: {written_data.get("last_updated", "NOT FOUND")}')
-            print(f'Verification - File action_run_id: {written_data.get("action_run_id", "NOT FOUND")}')
-            
         except Exception as e:
             print(f'Error saving JSON file: {e}')
             raise
         
         for i, item in enumerate(top_items, 1):
-            print(f'{i}. {item[\"title\"]}')
+            print(f'{i}. {item["title"]}')
         "
         
     - name: Commit and push changes
@@ -228,22 +188,12 @@ jobs:
         # Check if the JSON file exists
         if [ -f "data/latest-news.json" ]; then
             echo "✅ JSON file exists, adding to git..."
-            
-            # Show file content and git diff for debugging
-            echo "📋 Current JSON file content:"
-            head -n 10 data/latest-news.json
-            echo "..."
-            
             git add data/latest-news.json
             git status
             
-            echo "🔍 Git diff of changes:"
-            git diff --cached data/latest-news.json || echo "No diff output"
-            
-            # Always commit and push, even if content appears the same
-            # This ensures fresh data is always fetched and timestamp is updated
-            echo "🔄 Force updating JSON file with fresh data..."
-            git commit --allow-empty -m "Update latest news from GeoDI RSS feed - $(date) - Force refresh"
+            # Always commit and push
+            echo "🔄 Updating JSON file with fresh data..."
+            git commit -m "Update latest news from GeoDI RSS feed - $(date)"
             git push
             echo "✅ Successfully pushed fresh news data"
         else
