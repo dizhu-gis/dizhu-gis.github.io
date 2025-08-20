@@ -112,6 +112,9 @@ jobs:
                 description = re.sub(r'<[^>]+>', '', description)
                 description = description.replace('&nbsp;', ' ').strip()
                 
+                print(f'Processing item: {title}')
+                print(f'Raw description length: {len(description)}')
+                
                 # Extract the first paragraph of actual content
                 # The RSS description contains: "Title\nauthor\ndate\n\n\n\n\n\n  \n    \n      \n        \n          \n\n\n  \n    \n      \n            Actual content..."
                 # We need to find the actual content that starts after the metadata
@@ -123,8 +126,9 @@ jobs:
                 if content_match:
                     # Found content with the spaces pattern
                     extracted_content = content_match.group(1).strip()
-                    print(f'Extracted content for "{title}": {extracted_content[:100]}...')
+                    print(f'✅ Extracted content (pattern match): {extracted_content[:100]}...')
                 else:
+                    print(f'⚠️  Pattern match failed, trying fallback...')
                     # Fallback: try to find content after metadata patterns
                     # Split by lines and look for substantial content
                     lines = description.split('\n')
@@ -153,24 +157,14 @@ jobs:
                     else:
                         # If no sentence ending, take first 200 chars
                         extracted_content = extracted_content[:200].strip()
+                    
+                    print(f'✅ Extracted content (fallback): {extracted_content[:100]}...')
                 
                 # Limit description length
                 if len(extracted_content) > 200:
                     extracted_content = extracted_content[:200] + '...'
                 
-                # Fix: If content starts with "article," or similar fragments, find the complete sentence
-                if extracted_content.startswith('article,') or extracted_content.startswith('paper,') or extracted_content.startswith('research,'):
-                    # Look for the complete sentence that contains this fragment
-                    # Find where the actual content starts (after the spaces pattern)
-                    full_content_match = re.search(r'\s{12,}([^.!?]+[.!?])', description)
-                    if full_content_match:
-                        # Get the full content after spaces
-                        full_content = full_content_match.group(0).strip()
-                        # Find the first complete sentence in this content
-                        sentence_match = re.search(r'([^.!?]+[.!?])', full_content)
-                        if sentence_match:
-                            extracted_content = sentence_match.group(1).strip()
-                            print(f'Fixed content (complete sentence) for "{title}": {extracted_content[:100]}...')
+                print(f'Final extracted content: {extracted_content[:100]}...')
                 
                 items.append({
                     'title': title,
