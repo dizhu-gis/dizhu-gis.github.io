@@ -158,6 +158,20 @@ jobs:
                 if len(extracted_content) > 200:
                     extracted_content = extracted_content[:200] + '...'
                 
+                # Fix: If content starts with "article," or similar fragments, find the complete sentence
+                if extracted_content.startswith('article,') or extracted_content.startswith('paper,') or extracted_content.startswith('research,'):
+                    # Look for the complete sentence that contains this fragment
+                    # Find where the actual content starts (after the spaces pattern)
+                    full_content_match = re.search(r'\s{12,}([^.!?]+[.!?])', description)
+                    if full_content_match:
+                        # Get the full content after spaces
+                        full_content = full_content_match.group(0).strip()
+                        # Find the first complete sentence in this content
+                        sentence_match = re.search(r'([^.!?]+[.!?])', full_content)
+                        if sentence_match:
+                            extracted_content = sentence_match.group(1).strip()
+                            print(f'Fixed content (complete sentence) for "{title}": {extracted_content[:100]}...')
+                
                 items.append({
                     'title': title,
                     'description': extracted_content,
