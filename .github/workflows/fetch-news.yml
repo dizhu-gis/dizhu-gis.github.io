@@ -81,7 +81,7 @@ jobs:
             print('XML parsing successful')
         except Exception as e:
             print(f'Error parsing XML: {e}')
-            print(f'First 200 chars of content: {rss_text[:200] if 'rss_text' in locals() else 'N/A'}')
+            print(f'First 200 chars of content: {rss_text[:200] if \"rss_text\" in locals() else \"N/A\"}')
             raise
         
         # Extract items (RSS format)
