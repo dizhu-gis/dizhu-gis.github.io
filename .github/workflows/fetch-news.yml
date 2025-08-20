@@ -38,8 +38,16 @@ jobs:
         print(f'Fetching RSS from: {rss_url}')
         
         try:
-            # Use urllib instead of requests (built-in)
-            with urllib.request.urlopen(rss_url, timeout=30) as response:
+            # Create request with proper headers to avoid 403 error
+            req = urllib.request.Request(rss_url)
+            req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36')
+            req.add_header('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8')
+            req.add_header('Accept-Language', 'en-US,en;q=0.5')
+            req.add_header('Accept-Encoding', 'gzip, deflate')
+            req.add_header('Connection', 'keep-alive')
+            
+            # Use urllib with headers
+            with urllib.request.urlopen(req, timeout=30) as response:
                 rss_content = response.read()
             print(f'RSS fetch successful, status: {response.status}')
         except Exception as e:
