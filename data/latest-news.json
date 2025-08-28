@@ -1,10 +1,10 @@
 {
-  "last_updated": "2025-08-28T17:04:28.884577",
+  "last_updated": "2025-08-28T17:06:55.137505",
   "source": "https://geodi.umn.edu/rss.xml",
   "items": [
     {
       "title": "University of Minnesota Highlights GeoDI Lab’s Visitor Census Study",
-      "description": "Our recent study, A Visitor-Enriched Census in U.",
+      "description": "Our recent study, A Visitor-Enriched Census in US Cities Using Large-Scale Mobile Positioning Data, was recently featured by the University of Minnesota in a campus-wide news article.",
       "url": "https://geodi.umn.edu/university-minnesota-highlights-geodi-labs-visitor-census-study",
       "date": "Thu, 28 Aug 2025 17:02:31 +0000"
     },
@@ -21,5 +21,5 @@
       "date": "Fri, 04 Jul 2025 23:32:23 +0000"
     }
   ],
-  "action_run_id": "run_1756400668_3598"
+  "action_run_id": "run_1756400815_1378"
 }
