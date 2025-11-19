@@ -1,25 +1,25 @@
 {
-  "last_updated": "2025-10-28T20:48:50.968248",
+  "last_updated": "2025-11-19T22:23:21.961193",
   "source": "https://geodi.umn.edu/rss.xml",
   "items": [
+    {
+      "title": "Making “Edges” Visible in Spatial Networks —  New Paper Published in Transactions in GIS",
+      "description": "Spatial networks play a central role in understanding human–environment interactions in cities.",
+      "url": "https://geodi.umn.edu/making-edges-visible-spatial-networks-new-paper-published-transactions-gis",
+      "date": "Wed, 19 Nov 2025 22:18:09 +0000"
+    },
+    {
+      "title": "UMN and GeoDI Lab serve as the local hosts in ACM SIGSPATIAL 2025 at Minneapolis",
+      "description": "The 2025 ACM SIGSPATIAL (the 33rd ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems) was successfully held in Minneapolis, Minnesota during Nov.",
+      "url": "https://geodi.umn.edu/umn-and-geodi-lab-serve-local-hosts-acm-sigspatial-2025-minneapolis",
+      "date": "Fri, 07 Nov 2025 18:01:39 +0000"
+    },
     {
       "title": "GeoDI talk series - invited talk by Dr. Yuhao Kang and Dr. Junghwan Kim",
       "description": "GeoDI lab is thrilled to have two outstanding scholars in GIScience &amp; GeoAI for invited talks at the University of Minnesota from Oct 22-24:\n  \n      \n              \n\n\n      \n  \n\n  \n      \n       ...",
       "url": "https://geodi.umn.edu/geodi-talk-series-invited-talk-dr-yuhao-kang-and-dr-junghwan-kim",
       "date": "Tue, 28 Oct 2025 19:49:00 +0000"
-    },
-    {
-      "title": "Di shared our \"visitor census\" work at MN GIS/LIS 2025 and ACSP 2025",
-      "description": "Dr Di Zhu recently presented GeoDI lab’s  work, “A Visitor-Enriched Census in U.",
-      "url": "https://geodi.umn.edu/di-shared-our-visitor-census-work-mn-gislis-2025-and-acsp-2025",
-      "date": "Tue, 28 Oct 2025 19:29:58 +0000"
-    },
-    {
-      "title": "New research article on \"Lakeplace\" is published in Environment and Planning B: Urban Analytics and City Science",
-      "description": "Minnesota is famously known as “The Land of 10,000 Lakes.",
-      "url": "https://geodi.umn.edu/new-research-article-lakeplace-published-environment-and-planning-b-urban-analytics-and-city",
-      "date": "Tue, 28 Oct 2025 18:41:16 +0000"
     }
   ],
-  "action_run_id": "run_1761684530_4003"
+  "action_run_id": "run_1763591001_9583"
 }
