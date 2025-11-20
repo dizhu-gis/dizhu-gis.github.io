@@ -1,6 +1,27 @@
 {
   "publications": [
     {
+      "id": "wang-zhu-2025-eago",
+      "title": "A Context-Enhanced Graph Neural Network Operator for Edge-to-Edge Learning in Human Mobility Networks",
+      "authors": "S. Wang and Di Zhu*",
+      "venue": "Transactions in GIS",
+      "year": 2025,
+      "category": "journals",
+      "doi": " https://doi.org/10.1111/tgis.70154",
+      "pdf": "wang-zhu-2025-eago.pdf",
+      "code": "https://github.com/GeoDI-Lab/EAM-TGIS"
+    },
+    {
+      "id": "xiong-zhu-2025-lakeplace_EPB",
+      "title": "Sensing lakeplace: Interactions between lakes and human activities",
+      "authors": "M. Xiong and Di Zhu*",
+      "venue": "Environment and Planning B: Urban Analytics and City Science",
+      "year": 2025,
+      "category": "journals",
+      "doi": "https://doi.org/10.1177/23998083251386148",
+      "pdf": "xiong-zhu-2025-lakeplace-epb.pdf"
+    },
+    {
       "id": "zhu-ma-2025-gravity",
       "title": "Gravity-informed deep flow inference for spatial evolution modeling in panel data",
       "authors": "Di Zhu* and Z. Ma",
@@ -67,11 +88,21 @@
       "id": "luo-etal-2025-micromobility",
       "title": "Modeling shared micromobility as a label propagation process for detecting the overlapping communities",
       "authors": "P. Luo, C. Song, H. Li, Di Zhu, and F. Duarte",
-      "venue": "arXiv preprint arXiv:2501.15713",
+      "venue": "Computers, Environment and Urban Systems",
       "year": 2025,
       "category": "journals",
-      "doi": "https://arxiv.org/abs/2501.15713",
+      "doi": " https://doi.org/10.1016/j.compenvurbsys.2025.102336",
       "pdf": "luo-etal-2025-micromobility.pdf"
+    },
+    {
+      "id": "Gao-etal-2025-sigspatialgeoai2024report",
+      "title": "Report of the 7th ACM SIGSPATIAL International Workshop on AI for Geographic Knowledge Discovery (GeoAI 2024)",
+      "authors": "S.Gao, G. Mai, S. Newsam, L. Yang, D. Lunga, Di Zhu, B. Martins, and S. Arundel",
+      "venue": "The SIGSPATIAL Special",
+      "year": 2025,
+      "category": "journals",
+      "doi": " https://doi.org/10.1145/3757932.3757933",
+      "pdf": "gao-etal-2025-geoai24.pdf"
     },
     {
       "id": "wang-etal-2025-functional-zones",
@@ -97,10 +128,10 @@
       "id": "guo-etal-2025-regiongcn",
       "title": "RegionGCN: Spatial-Heterogeneity-Aware Graph Convolutional Networks",
       "authors": "H. Guo, H. Wang, Di Zhu, L. Wu, A. S. Fotheringham, and Y. Liu",
-      "venue": "arXiv preprint arXiv:2501.17599",
+      "venue": "Annals of the American Association of Geographers",
       "year": 2025,
       "category": "journals",
-      "doi": "https://doi.org/10.48550/arXiv.2501.17599",
+      "doi": "https://doi.org/10.1080/24694452.2025.2558661",
       "pdf": "guo-etal-2025-regiongcn.pdf"
     },
     {
