@@ -20,6 +20,9 @@ class PublicationsManager {
 
     async loadPublications() {
         try {
+            // Add cache-busting query parameter to ensure fresh data
+            const cacheBuster = `?v=${Date.now()}`;
+            
             // Try different paths for the JSON file
             const paths = [
                 './publications/publications.json',
@@ -30,7 +33,13 @@ class PublicationsManager {
             let response = null;
             for (const path of paths) {
                 try {
-                    response = await fetch(path);
+                    // Add cache-busting to prevent stale cached data
+                    response = await fetch(path + cacheBuster, {
+                        cache: 'no-store',
+                        headers: {
+                            'Cache-Control': 'no-cache'
+                        }
+                    });
                     if (response.ok) break;
                 } catch (e) {
                     continue;
