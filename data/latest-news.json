@@ -1,7 +1,13 @@
 {
-  "last_updated": "2025-12-02T16:52:29.903438",
+  "last_updated": "2026-01-05T17:42:47.461427",
   "source": "https://geodi.umn.edu/rss.xml",
   "items": [
+    {
+      "title": "New Paper on Deep Explainable Spatial Regression published in ISPRS Journal of Photogrammetry and Remote Sensing",
+      "description": "GeoDI Lab kicks off 2026 new year with the publication of a new research article in the ISPRS Journal of Photogrammetry and Remote Sensing (Impact Factor: 12.",
+      "url": "https://geodi.umn.edu/new-paper-deep-explainable-spatial-regression-published-isprs-journal-photogrammetry-and-remote",
+      "date": "Mon, 05 Jan 2026 17:38:04 +0000"
+    },
     {
       "title": "GeoDI Lab Undergraduate Researcher Receives UROP Award",
       "description": "We are delighted to share that Mathias Kreuziger, an undergraduate researcher in the GeoDI Lab, has been awarded a highly competitive Undergraduate Research Opportunities Program (UROP) award from the...",
@@ -13,13 +19,7 @@
       "description": "Spatial networks play a central role in understanding human–environment interactions in cities.",
       "url": "https://geodi.umn.edu/making-edges-visible-spatial-networks-new-paper-published-transactions-gis",
       "date": "Wed, 19 Nov 2025 22:18:09 +0000"
-    },
-    {
-      "title": "UMN and GeoDI Lab serve as the local hosts in ACM SIGSPATIAL 2025 at Minneapolis",
-      "description": "The 2025 ACM SIGSPATIAL (the 33rd ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems) was successfully held in Minneapolis, Minnesota during Nov.",
-      "url": "https://geodi.umn.edu/umn-and-geodi-lab-serve-local-hosts-acm-sigspatial-2025-minneapolis",
-      "date": "Fri, 07 Nov 2025 18:01:39 +0000"
     }
   ],
-  "action_run_id": "run_1764694349_6483"
+  "action_run_id": "run_1767634967_6109"
 }
