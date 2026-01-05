@@ -1,5 +1,52 @@
 {
   "publications": [
+    { "id": "zhu2026xsr",
+      "title": "Uncovering spatial process heterogeneity from graph-based deep spatial regression",
+      "authors": "Di Zhu*, S. Wang, P. Luo",
+      "venue": "ISPRS Journal of Photogrammetry and Remote Sensing",
+      "year": 2026,
+      "category": "journals",
+      "doi": "https://doi.org/10.1016/j.isprsjprs.2025.12.008",
+      "pdf": "zhu2026xsr.pdf",
+      "code": "https://github.com/GeoDI-Lab/XSRGCNN"      
+    },
+    { "id": "ma2025neural",
+      "title": "A Neural Fitting Method for Potential Differential Equations in Urban Dynamics",
+      "authors": "Z. Ma and Di Zhu*",
+      "venue": "Proceedings of the 8th ACM SIGSPATIAL International Workshop on AI for Geographic Knowledge Discovery",
+      "year": 2025,
+      "category": "conferences",
+      "doi": "https://doi.org/10.1145/3764912.3770816",
+      "pdf": "ma2025neural.pdf"       
+    },
+    { "id": "xiong2025downscaling",
+      "title": "A Graph-based Deep Population Downscaling Model on Irregular Spatial Units",
+      "authors": "M. Xiong and Di Zhu*",
+      "venue": "Proceedings of the 8th ACM SIGSPATIAL International Workshop on AI for Geographic Knowledge Discovery",
+      "year": 2025,
+      "category": "conferences",
+      "doi": "https://doi.org/10.1145/3764912.3770815",
+      "pdf": "xiong2025downscaling.pdf"    
+    },
+    { "id": "wang2025visitationlaw",
+      "title": "A Deep Origin-Destination Flow Imputation Model Informed by the Visitation Law in Human Mobility",
+      "authors": "S. Wang and Di Zhu*",
+      "venue": "Proceedings of the 33rd ACM International Conference on Advances in Geographic Information Systems",
+      "year": 2025,
+      "category": "conferences",
+      "doi": "https://doi.org/10.1145/3748636.3766527",
+      "pdf": "wang2025visitationlaw.pdf" 
+        
+    },
+    { "id": "song2025homedetect",
+      "title": "A Behavior-Informed and Geo-Context-Aware Home Detection Framework for Mobile Phone Positioning Data",
+      "authors": "Y. Song, M. Xiong, X. Zeng and Di Zhu",
+      "venue": "Proceedings of the 33rd ACM International Conference on Advances in Geographic Information Systems",
+      "year": 2025,
+      "category": "conferences",
+      "doi": "https://doi.org/10.1145/3748636.376417",
+      "pdf": "song2025homedetect.pdf"  
+    },
     {
       "id": "wang-zhu-2025-eago",
       "title": "A Context-Enhanced Graph Neural Network Operator for Edge-to-Edge Learning in Human Mobility Networks",
@@ -20,6 +67,16 @@
       "category": "journals",
       "doi": "https://doi.org/10.1177/23998083251386148",
       "pdf": "xiong-zhu-2025-lakeplace-epb.pdf"
+    },
+    {
+      "id": "wangyi-2025-tpami",
+      "title": "A Gravity-informed spatiotemporal transformer for human activity intensity prediction",
+      "authors": "Y. Wang, Z. Wang, F. Zhang, C. Tang, C. Kang, Di Zhu, Z. Ma, S. Ruan, W. Zhang, Y. Zheng, P. Yu, Y. Liu",
+      "venue": "Transactions on Pattern Analysis and Machine Learning",
+      "year": 2025,
+      "category": "journals",
+      "doi": "https://doi.org/10.1109/TPAMI.2025.3625859",
+      "pdf": "wangyi-2025-tpami.pdf"
     },
     {
       "id": "zhu-ma-2025-gravity",
