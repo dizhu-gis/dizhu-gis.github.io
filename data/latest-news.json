@@ -1,7 +1,13 @@
 {
-  "last_updated": "2026-01-05T17:42:47.461427",
+  "last_updated": "2026-03-31T20:24:14.107194",
   "source": "https://geodi.umn.edu/rss.xml",
   "items": [
+    {
+      "title": "Prof. Di Zhu Awarded the McKnight Land-Grant Professorship by the University of Minnesota",
+      "description": "McKnight Land-Grant Professor 2026-2028The University of Minnesota has awarded Professor Di Zhu the McKnight Land-Grant Professorship.",
+      "url": "https://geodi.umn.edu/prof-di-zhu-awarded-mcknight-land-grant-professorship-university-minnesota",
+      "date": "Tue, 31 Mar 2026 20:16:19 +0000"
+    },
     {
       "title": "New Paper on Deep Explainable Spatial Regression published in ISPRS Journal of Photogrammetry and Remote Sensing",
       "description": "GeoDI Lab kicks off 2026 new year with the publication of a new research article in the ISPRS Journal of Photogrammetry and Remote Sensing (Impact Factor: 12.",
@@ -13,13 +19,7 @@
       "description": "We are delighted to share that Mathias Kreuziger, an undergraduate researcher in the GeoDI Lab, has been awarded a highly competitive Undergraduate Research Opportunities Program (UROP) award from the...",
       "url": "https://geodi.umn.edu/geodi-lab-undergraduate-researcher-receives-urop-award",
       "date": "Tue, 02 Dec 2025 16:41:51 +0000"
-    },
-    {
-      "title": "Making “Edges” Visible in Spatial Networks —  New Paper Published in Transactions in GIS",
-      "description": "Spatial networks play a central role in understanding human–environment interactions in cities.",
-      "url": "https://geodi.umn.edu/making-edges-visible-spatial-networks-new-paper-published-transactions-gis",
-      "date": "Wed, 19 Nov 2025 22:18:09 +0000"
     }
   ],
-  "action_run_id": "run_1767634967_6109"
+  "action_run_id": "run_1774988654_9921"
 }
