@@ -131,7 +131,7 @@ class PublicationsManager {
         }
 
         // Limit to 5 publications for main page
-        const displayPublications = filteredPublications.slice(0, 5);
+        const displayPublications = filteredPublications.slice(0, 10);
 
         // Render each publication
         displayPublications.forEach(publication => {
