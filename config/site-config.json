@@ -59,7 +59,7 @@
   "about": {
     "title": "About Me",
     "content": [
-      "I am an Assistant Professor of Geographic Information Science (GIScience) in the Department of Geography, Environment and Society (GES), University of Minnesota, Twin Cities (UMN), and the director of Geospatial Data Intelligence (GeoDI) Lab.",
+      "I am a McKnight Land-Grant Professor and Assistant Professor of GIScience in the Department of Geography, Environment, and Society at the University of Minnesota, Twin Cities (UMN). I am also the director of Geospatial Data Intelligence (GeoDI) Lab.",
       "My research focuses on GIScience, Geospatial Artificial Intelligence (GeoAI), Spatial Networks, Human-Environment Interactions, and Urban Complexities."
     ],
     "education": [
@@ -180,4 +180,4 @@
       }
     ]
   }
-} 
+}
