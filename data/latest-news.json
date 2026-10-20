@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-20T16:20:53.716163",
+  "last_updated": "2026-10-20T16:24:20.770308",
   "source": "https://geodi.umn.edu/rss.xml",
   "items": [
     {
@@ -10,7 +10,7 @@
     },
     {
       "title": "GeoDI Lab members attended the 2026 CaGIS conference",
-      "description": "Dr.",
+      "description": "Professor Di Zhu and Meicheng attended the 2026 CaGIS conference The Cartographer in the Loop held in St Louis from Sep 8 to Sep 11, 2026.",
       "url": "https://geodi.umn.edu/geodi-lab-members-attended-2026-cagis-conference",
       "date": "Thu, 17 Sep 2026 04:18:17 +0000"
     },
@@ -21,5 +21,5 @@
       "date": "Tue, 09 Jun 2026 23:19:22 +0000"
     }
   ],
-  "action_run_id": "run_1792513253_8588"
+  "action_run_id": "run_1792513460_8547"
 }
